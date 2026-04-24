@@ -90,6 +90,21 @@ make up-gpu
 make dev-gpu
 ```
 
+## Experiments
+
+The base service in `haystack_api/` is the reference RAG stack. On top of it, [`experiments/`](experiments/README.md) holds self-contained experiments — each one folder, each one idea. Pick one with `PIPELINE_CONFIG`:
+
+```
+PIPELINE_CONFIG=exp_001_smart_document_splitter make up
+# or
+make exp-up EXP=001_smart_document_splitter
+make exp-list
+```
+
+Current experiments:
+
+- **001 — Smart Document Splitter** ([experiments/exp_001_smart_document_splitter/](experiments/exp_001_smart_document_splitter/README.md)) — strategy-pluggable chunking (markdown-header / recursive / simple) selectable per request.
+
 
 ## Useful Resources
 
