@@ -1,0 +1,10 @@
+.venv
+.git
+.vscode
+.pytest_cache
+.ruff_cache
+.coverage
+haystack_api/file-upload
+qdrant_storage
+cache
+ngrok

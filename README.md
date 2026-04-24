@@ -2,7 +2,7 @@
 
 **rag_haystack** is a RAG stack that provides APIs to consume customized [haystack](https://docs.haystack.deepset.ai/docs)-pipelines. It uses [Qdrant](https://qdrant.tech/) as a document store and APIs to interact with it are also provided. This repo also holds self-contained experiments with various RAG techniques that are not part of the default pipelines.
 
-## launch everything
+## Launch everything
 
 1. Run `make help` to get the list of available commands through the `Makefile`
 2. Ensure the file-upload directory exists with correct permissions (required for the file-upload endpoint):
@@ -26,7 +26,7 @@ make up logs
 
 ## Models
 
-The pipelines rely on one HuggingFace model:
+The default pipelines rely on one HuggingFace model:
 
 - `sentence-transformers/all-mpnet-base-v2` — document / query embedder (768-dim)
 
@@ -35,7 +35,7 @@ The model is **pre-downloaded during `make build`** and baked into the image at 
 For air-gapped or custom-model deployments, set `LOCAL_MODEL_DIR=/abs/path` in your `.env` and mount that path in a compose override. The model should live at `<LOCAL_MODEL_DIR>/sentence-transformers/all-mpnet-base-v2/`. If `LOCAL_MODEL_DIR` is set but the subdirectory is missing, the service logs a warning and falls back to the baked-in HuggingFace cache. Set `HF_TOKEN` if you hit rate limits at build time or need gated models.
 
 
-## local setup
+## Local setup
 
 To run different development tasks like testing, code-formatting and debugging it's best to have a non-docker setup too. Dependencies are managed with [uv](https://docs.astral.sh/uv/).
 
@@ -89,22 +89,6 @@ make up-gpu
 ```
 make dev-gpu
 ```
-
-
-## Experiments
-
-The base service in `haystack_api/` is the reference RAG stack. On top of it, [`experiments/`](experiments/README.md) holds self-contained experiments — each one folder, each one idea. Pick one with `PIPELINE_CONFIG`:
-
-```
-PIPELINE_CONFIG=exp_001_smart_document_splitter make up
-# or
-make exp-up EXP=001_smart_document_splitter
-make exp-list
-```
-
-Current experiments:
-
-- **001 — Smart Document Splitter** ([experiments/exp_001_smart_document_splitter/](experiments/exp_001_smart_document_splitter/README.md)) — strategy-pluggable chunking (markdown-header / recursive / simple) selectable per request.
 
 
 ## Useful Resources

@@ -1,0 +1,102 @@
+services:
+  haystack-api:
+    image: haystack_api:latest
+    command: /usr/local/bin/haystack-entry.sh
+    networks:
+      - main-net
+    expose:
+      - "31415"
+    ports:
+      - 31415:31415
+    environment:
+      - HAYSTACK_TELEMETRY_ENABLED=${HAYSTACK_TELEMETRY_ENABLED:-False}
+      - QDRANT_HTTP_PORT=${QDRANT_HTTP_PORT:-6333}
+      - QDRANT_GRPC_PORT=${QDRANT_GRPC_PORT:-6334}
+      - QDRANT_HOST=${QDRANT_HOST:-qdrant-server}
+      - REDIS_HOST=${REDIS_HOST:-redis-server}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_DB=${REDIS_DB:-0}
+      - REDIS_USER=${REDIS_USER}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - FILE_UPLOAD_PATH=/tmp/file-upload
+      - HF_TOKEN=${HF_TOKEN:-}
+      - PIPELINE_CONFIG=${PIPELINE_CONFIG:-en_gen}
+      - LOCAL_MODEL_DIR=${LOCAL_MODEL_DIR:-}
+      - HF_HOME=${HF_HOME:-/opt/hf_cache}
+      - OLLAMA_HOST=${OLLAMA_HOST}
+      - OLLAMA_EXT_LINK=${OLLAMA_EXT_LINK:-}
+      - OLLAMA_API_KEY=${OLLAMA_API_KEY}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-hf.co/unsloth/phi-4-GGUF:Q3_K_M}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - qdrant-server
+      - redis-server
+    volumes:
+      - ./haystack_api/file-upload:/tmp/file-upload
+
+  haystack-worker:
+    image: haystack_api:latest
+    command: /usr/local/bin/haystack-worker-entry.sh
+    networks:
+      - main-net
+    environment:
+      - HAYSTACK_TELEMETRY_ENABLED=${HAYSTACK_TELEMETRY_ENABLED:-False}
+      - QDRANT_HTTP_PORT=${QDRANT_HTTP_PORT:-6333}
+      - QDRANT_GRPC_PORT=${QDRANT_GRPC_PORT:-6334}
+      - QDRANT_HOST=${QDRANT_HOST:-qdrant-server}
+      - REDIS_HOST=${REDIS_HOST:-redis-server}
+      - REDIS_PORT=${REDIS_PORT:-6379}
+      - REDIS_DB=${REDIS_DB:-0}
+      - REDIS_USER=${REDIS_USER}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - FILE_UPLOAD_PATH=/tmp/file-upload
+      - HF_TOKEN=${HF_TOKEN:-}
+      - PIPELINE_CONFIG=${PIPELINE_CONFIG:-en_gen}
+      - LOCAL_MODEL_DIR=${LOCAL_MODEL_DIR:-}
+      - HF_HOME=${HF_HOME:-/opt/hf_cache}
+      - OLLAMA_HOST=${OLLAMA_HOST}
+      - OLLAMA_EXT_LINK=${OLLAMA_EXT_LINK:-}
+      - OLLAMA_API_KEY=${OLLAMA_API_KEY}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-hf.co/unsloth/phi-4-GGUF:Q3_K_M}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    depends_on:
+      - qdrant-server
+      - redis-server
+      - haystack-api
+    volumes:
+      - ./haystack_api/file-upload:/tmp/file-upload
+
+  qdrant-server:
+    image: qdrant:latest
+    networks:
+      - main-net
+    expose:
+      - "6333"
+      - "6334"
+    environment:
+      - QDRANT__TELEMETRY_DISABLED=${QDRANT__TELEMETRY_DISABLED:-true}
+    volumes:
+      - qdrant_data:/qdrant/storage
+
+  redis-server:
+    image: redis:alpine
+    networks:
+      - main-net
+    ports:
+      - '6379:6379'
+
+  # ollama-server:
+  #   image: ollama/ollama:latest
+  #   networks:
+  #     - main-net
+  #   ports:
+  #     - 11434:11434
+  #   expose:
+  #     - "11434"
+
+volumes:
+  qdrant_data:
+
+networks:
+  main-net:
+    driver: bridge

@@ -1,0 +1,11 @@
+FROM qdrant/qdrant:v1.14.0-unprivileged@sha256:cf0d550caa359308c6ee6487f7298389010d611cfca098e29b6f61aeb932b365
+
+USER 0:0
+
+COPY scripts/qdrant-entry.sh /usr/local/bin/qdrant-entry.sh
+RUN mkdir -p /var/log/service && chmod -R ag=u /var/log/service \
+    && chmod -R ag=u /usr/local/bin/qdrant-entry.sh
+
+ENTRYPOINT ["/usr/local/bin/qdrant-entry.sh"]
+
+USER 1000:1000

@@ -1,0 +1,111 @@
+[project]
+name = "haystack-api"
+version = "0.1.0"
+description = ""
+authors = [{ name = "rajan.mehta" }]
+readme = "README.md"
+requires-python = ">=3.10.11,<3.12"
+dependencies = [
+    "haystack-ai>=2.26.1,<3.0.0",
+    "fastapi>=0.114.0,<0.115.0",
+    "uvicorn>=0.22.0,<0.23.0",
+    "python-multipart>=0.0.6,<0.0.7",
+    "pynvml>=11.5.0,<12.0.0",
+    "psutil>=5.9.5,<6.0.0",
+    "urllib3>=1.26.15,<2.0.0",
+    "aiohttp>=3.9.1,<4.0.0",
+    "celery[redis]>=5.4.0,<6.0.0",
+    "requests-mock==1.12.1",
+    "structlog>=24.4.0,<25.0.0",
+    "transformers>=4.47.1,<5.0.0",
+    "torch>=2.0.0,<3.0.0",
+    "sentencepiece>=0.2.0,<0.3.0",
+    "huggingface-hub==0.27.0",
+    "qdrant-client>=1.17.0,<2.0.0",
+    "openai>=1.56.1",
+    "numpy==1.26.4",
+    "nltk==3.9.1",
+    "pypdf>=5.2.0,<6.0.0",
+    "python-docx>=1.1.2,<2.0.0",
+    "jq>=1.8.0,<2.0.0",
+    "pydash>=7.0.6,<8.0.0",
+    "qdrant-haystack>=10.3.0,<11.0.0",
+    "sentence-transformers>=3.4.1,<4.0.0",
+    "pandas>=2.2.3,<3.0.0",
+    "beautifulsoup4>=4.12.3,<5.0.0",
+    "lxml-html-clean>=0.1.0,<0.2.0",
+    "trafilatura>=1.12.2,<2.0.0",
+    "lxml>=5.3.0,<6.0.0",
+    "cssselect>=1.2.0,<2.0.0",
+    "ollama-haystack>=2.3.0,<3.0.0",
+    "markitdown-haystack>=1.0.0,<2.0.0",
+    "markitdown[all]>=0.1.5",
+]
+
+[dependency-groups]
+dev = [
+    "black>=23.3.0,<24.0.0",
+    "isort>=5.12.0,<6.0.0",
+    "ruff>=0.0.270,<0.0.271",
+    "pytest>=7.3.1,<8.0.0",
+    "pytest-cov>=4.1.0,<5.0.0",
+    "pytest-xdist>=3.3.1,<4.0.0",
+    "pytest-clarity>=1.0.1,<2.0.0",
+    "pytest-asyncio>=0.21.1,<0.22.0",
+    "pytest-mock==3.14.0",
+    "commitizen>=3.5.2,<4.0.0",
+]
+
+[tool.uv]
+package = true
+default-groups = []
+
+[tool.hatch.build.targets.wheel]
+packages = ["haystack_api"]
+
+[tool.black]
+line-length = 120
+target_version = ["py310"]
+
+[tool.isort]
+profile = "black"
+py_version = 310
+multi_line_output = 3
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.per-file-ignores]
+"tests/test_haystack_api.py" = ["E501"]
+"tests/test_custom_components.py" = ["E501"]
+"haystack_api/pipeline/pipeline_configs/**/*.py" = ["E501"]
+"haystack_api/prompt_templates.py" = ["E501"]
+"haystack_api/controller/__init__.py" = ["F401"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.coverage]
+    [tool.coverage.run]
+    include = ['haystack_api/*']
+    omit = [
+        '__init__.py',
+        '__about__.py',
+        'schema.py',
+        'application.py',
+        'health.py',
+        'evaluators.py',
+        'utils.py',
+        'component_utils.py',
+        'structlog_config.py',
+        '*/pipeline_configs/*'
+    ]
+
+    data_file = '/tmp/.coverage'
+
+    [tool.coverage.report]
+    skip_empty = true
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

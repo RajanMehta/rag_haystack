@@ -1,0 +1,29 @@
+services:
+  haystack-api:
+    environment:
+      - GPU_MEMORY_PERCENT=${GPU_MEMORY_PERCENT:-50}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  haystack-worker:
+    environment:
+      - GPU_MEMORY_PERCENT=${GPU_MEMORY_PERCENT:-50}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]  
+  ollama-server:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
