@@ -814,6 +814,36 @@ wheels = [
 ]
 
 [[package]]
+name = "gliner"
+version = "0.2.22"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "huggingface-hub" },
+    { name = "onnxruntime" },
+    { name = "sentencepiece" },
+    { name = "torch" },
+    { name = "tqdm" },
+    { name = "transformers" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/7f/46/352218ca26dd1b485980a3ce81af47da6bb3f78f5bbcc1754fe854636ab5/gliner-0.2.22.tar.gz", hash = "sha256:29202a4ce4f7ee3d7cd0a579dfc977e716e38263a8b41371576af0406b3081db", size = 65782, upload-time = "2025-08-26T14:44:36.664Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/04/33/36869c9cb2d059d20b3fcaf5ec61879099d6ca6f14c2ad023a7914ebc188/gliner-0.2.22-py3-none-any.whl", hash = "sha256:9d12298db26d53b95c49d684ec5d768fbd20833501612bb9865c95e6ec4359c1", size = 76299, upload-time = "2025-08-26T14:44:34.877Z" },
+]
+
+[[package]]
+name = "gliner2"
+version = "1.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "gliner" },
+    { name = "pydantic" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/77/99/856b52815f9faeb0bc123f6b5d8dd5c92fac1fa003c932692d17b8079223/gliner2-1.3.0.tar.gz", hash = "sha256:4e73b38bf75872052606b19eb85e4f742b7e52e32a73403e4abc72cb2af85a63", size = 120245, upload-time = "2026-04-15T14:35:03.564Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/1e/40/e2a39fe97561383d045e3edb6a4446179b81cec76657bbc55d963b455df2/gliner2-1.3.0-py3-none-any.whl", hash = "sha256:027e2776f0e8596d7455ae615eb2a9a847b35863baf8730e4215e6c67ee05be4", size = 92036, upload-time = "2026-04-15T14:35:00.557Z" },
+]
+
+[[package]]
 name = "grpcio"
 version = "1.80.0"
 source = { registry = "https://pypi.org/simple" }
@@ -907,6 +937,7 @@ dependencies = [
     { name = "celery", extra = ["redis"] },
     { name = "cssselect" },
     { name = "fastapi" },
+    { name = "gliner2" },
     { name = "haystack-ai" },
     { name = "huggingface-hub" },
     { name = "jq" },
@@ -959,6 +990,7 @@ requires-dist = [
     { name = "celery", extras = ["redis"], specifier = ">=5.4.0,<6.0.0" },
     { name = "cssselect", specifier = ">=1.2.0,<2.0.0" },
     { name = "fastapi", specifier = ">=0.114.0,<0.115.0" },
+    { name = "gliner2", specifier = ">=1.3.0,<2.0.0" },
     { name = "haystack-ai", specifier = ">=2.26.1,<3.0.0" },
     { name = "huggingface-hub", specifier = "==0.27.0" },
     { name = "jq", specifier = ">=1.8.0,<2.0.0" },

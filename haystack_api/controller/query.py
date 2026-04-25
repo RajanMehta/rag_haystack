@@ -78,6 +78,18 @@ async def query(request: QueryRequest):
     # Generate data for the pipeline
     data = query_execution_setting["data_generator"](request, params)
 
+    # If the configured pipeline includes a `query_filter_builder` component
+    # (currently used by exp_002 to derive Qdrant filters from query entities),
+    # route the user-supplied filters through it so it can AND-merge them with
+    # extracted ones. The retriever's filters input is wired to the builder's
+    # output in that pipeline shape.
+    if "query_filter_builder" in pipeline.to_dict()["components"]:
+        user_filters = data.get("embedding_retriever", {}).pop("filters", None)
+        data["query_filter_builder"] = {
+            "query": request.query,
+            "user_filters": user_filters,
+        }
+
     if params.get("generate"):
         template = get_template(request.pipeline_name, "local", OLLAMA_MODEL)
         data.update(

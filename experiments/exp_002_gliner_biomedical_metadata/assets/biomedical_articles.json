@@ -1,0 +1,86 @@
+[
+  {
+    "doc_id": "bio-001",
+    "title": "Aspirin for headache and fever",
+    "year": 2019,
+    "source": "synthetic",
+    "content": "Aspirin is widely used to treat headache and reduce fever. It works by inhibiting cyclooxygenase enzymes, which decreases the production of prostaglandins. Long-term low-dose aspirin therapy is also prescribed to lower the risk of heart attack in adults with cardiovascular disease."
+  },
+  {
+    "doc_id": "bio-002",
+    "title": "Insulin in type 1 diabetes",
+    "year": 2020,
+    "source": "synthetic",
+    "content": "Insulin therapy is essential for managing type 1 diabetes. Patients with type 1 diabetes monitor their blood glucose levels frequently and adjust insulin dosing accordingly. The pancreas in type 1 diabetes is unable to produce sufficient insulin due to autoimmune destruction of beta cells."
+  },
+  {
+    "doc_id": "bio-003",
+    "title": "BRCA1 and breast cancer risk",
+    "year": 2018,
+    "source": "synthetic",
+    "content": "BRCA1 is a tumor suppressor gene located on chromosome 17. Pathogenic mutations in BRCA1 substantially increase the lifetime risk of breast cancer and ovarian cancer. Genetic counselling is recommended for individuals with a strong family history of these cancers."
+  },
+  {
+    "doc_id": "bio-004",
+    "title": "Statins and cardiovascular prevention",
+    "year": 2021,
+    "source": "synthetic",
+    "content": "Statins reduce LDL cholesterol levels by inhibiting HMG-CoA reductase in the liver. They are widely prescribed to prevent cardiovascular disease and reduce the risk of myocardial infarction. Common side effects include muscle pain and elevated liver enzymes."
+  },
+  {
+    "doc_id": "bio-005",
+    "title": "Penicillin and bacterial infections",
+    "year": 2017,
+    "source": "synthetic",
+    "content": "Penicillin treats bacterial infections by interfering with cell wall synthesis. It remains a first-line antibiotic for streptococcal pharyngitis and syphilis. Penicillin is ineffective against viral infections such as influenza."
+  },
+  {
+    "doc_id": "bio-006",
+    "title": "ACE2 receptors and COVID-19",
+    "year": 2022,
+    "source": "synthetic",
+    "content": "ACE2 receptors expressed on cells in the lungs, heart, and intestines serve as the primary entry point for the SARS-CoV-2 virus. Infection causes COVID-19, with symptoms ranging from cough and fever to pneumonia and acute respiratory distress syndrome."
+  },
+  {
+    "doc_id": "bio-007",
+    "title": "Metformin for type 2 diabetes",
+    "year": 2020,
+    "source": "synthetic",
+    "content": "Metformin is the first-line oral medication for type 2 diabetes. It improves insulin sensitivity in muscle and liver tissue and reduces hepatic glucose production. Common side effects include nausea and diarrhea, and rarely, lactic acidosis."
+  },
+  {
+    "doc_id": "bio-008",
+    "title": "Chemotherapy across cancer types",
+    "year": 2019,
+    "source": "synthetic",
+    "content": "Chemotherapy is a standard treatment for many cancers, including leukemia, lymphoma, and breast cancer. Regimens often combine multiple cytotoxic agents to target rapidly dividing cells. Side effects include fatigue, nausea, hair loss, and bone marrow suppression."
+  },
+  {
+    "doc_id": "bio-009",
+    "title": "Hippocampus and memory",
+    "year": 2018,
+    "source": "synthetic",
+    "content": "The hippocampus, located in the medial temporal lobe of the brain, plays a critical role in memory formation and spatial navigation. Damage to the hippocampus, as seen in Alzheimer's disease, can cause severe amnesia and disorientation."
+  },
+  {
+    "doc_id": "bio-010",
+    "title": "Ibuprofen for pain and inflammation",
+    "year": 2021,
+    "source": "synthetic",
+    "content": "Ibuprofen is a non-steroidal anti-inflammatory drug used to relieve pain, fever, and inflammation. Common side effects include nausea, stomach pain, and an increased risk of gastrointestinal bleeding when taken long-term."
+  },
+  {
+    "doc_id": "bio-011",
+    "title": "TP53 mutations in human cancers",
+    "year": 2022,
+    "source": "synthetic",
+    "content": "TP53 is the most commonly mutated gene in human cancers. TP53 mutations are frequently observed in lung cancer, colorectal cancer, and ovarian cancer. The protein encoded by TP53 normally regulates cell cycle arrest and apoptosis in response to DNA damage."
+  },
+  {
+    "doc_id": "bio-012",
+    "title": "Amoxicillin in bacterial pneumonia",
+    "year": 2020,
+    "source": "synthetic",
+    "content": "Amoxicillin is a beta-lactam antibiotic commonly used to treat bacterial pneumonia and otitis media. It is ineffective against viral pneumonia. The lungs and bronchi are the primary anatomy affected during pneumonia infection."
+  }
+]
