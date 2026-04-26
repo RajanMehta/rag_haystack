@@ -54,7 +54,10 @@ curl -s -X POST localhost:31415/file-upload \
      -F "institution_id=$INST" \
      -F "collection_name=$COLL" \
      -F 'uuids=["bio-batch-1"]' \
-     -F 'tags=["biomed","exp002"]'
+     -F 'tags=["biomed","exp002"]' \
+     -F "split_by=word" \
+     -F "split_length=200" \
+     -F "split_overlap=0"
 
 # 3. Inspect indexed meta — confirm GLiNER populated entity fields per chunk.
 curl -s -X POST localhost:31415/documents/get_by_filters \
@@ -101,8 +104,8 @@ curl -s -X POST localhost:31415/query \
 
 - **First request is slow.** The GLiNER model is lazy-loaded on first `run()`, downloading from HF (~205M) if not yet cached. Bake into the image (à la `sentence-transformers/all-mpnet-base-v2` in [`Dockerfile`](../../Dockerfile)) if cold-start matters.
 - **Truncation.** `max_input_chars` (default 4000) caps GLiNER's input. Very long documents are truncated *before* extraction, but chunking still happens on the full content. Increase if your corpus has long-form articles where entities live near the end.
-- **Filter strictness.** AND-across-labels can over-filter when GLiNER picks up an entity the corpus doesn't tag for. Mitigation if you hit this: relax to OR-across-labels in `_extract_filter`, or move to a "soft filter" pattern (rerank with filter signal instead of hard-filter). Out of scope here.
-- **Label set is global.** Same labels are used for indexing and query extraction by design — different label sets would mean the query extractor picks fields the corpus never indexed.
+- **Filter strictness.** AND-across-labels can over-filter when GLiNER picks up an entity the corpus doesn't tag for. Mitigation if you hit this: relax to OR-across-labels in `_extract_filter`, or move to a "soft filter" pattern (rerank with filter signal instead of hard-filter). Not implemented here.
+- **Label set is global.** Same labels are used for indexing and query extraction by design. Different label sets would mean the query extractor picks fields the corpus never indexed.
 - **Base pipelines (`PIPELINE_CONFIG=en_gen`) are unaffected.** The controller switch only fires when `query_filter_builder` exists in the active pipeline. Base requests with `filters` continue to flow straight to the retriever.
 
 ## Files

@@ -40,6 +40,9 @@ def normalize_entities(result: Any, labels) -> Dict[str, list]:
         uniq = []
         for v in values:
             text = v.get("text") if isinstance(v, dict) else v
+            if not isinstance(text, str):
+                continue
+            text = text.strip().lower()
             if not text or text in seen:
                 continue
             seen.add(text)
