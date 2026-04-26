@@ -104,6 +104,7 @@ make exp-list
 Current experiments:
 
 - **001 — Smart Document Splitter** ([experiments/exp_001_smart_document_splitter/](experiments/exp_001_smart_document_splitter/README.md)) — strategy-pluggable chunking (markdown-header / recursive / simple) selectable per request.
+- **002 — GLiNER Metadata Extraction** ([experiments/exp_002_gliner_biomedical_metadata/](experiments/exp_002_gliner_biomedical_metadata/README.md)) — GLiNER2 replaces `LLMMetadataExtractor`; extracts `disease / drug / gene / symptom / anatomy / treatment` entities at index time and translates query entities into Qdrant filters at search time.
 
 
 ## Useful Resources

@@ -1,4 +1,4 @@
-# Experiment 002 — GLiNER Biomedical Metadata
+# Experiment 002 — GLiNER Metadata Extraction
 
 **PIPELINE_CONFIG value:** `exp_002_gliner_biomedical_metadata`
 
