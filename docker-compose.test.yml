@@ -1,7 +1,6 @@
 services:
   haystack-api:
     image: haystack_api:dev
-    platform: linux/amd64
     command: /usr/local/bin/haystack-entry.sh
     environment:
       - HAYSTACK_TELEMETRY_ENABLED=${HAYSTACK_TELEMETRY_ENABLED:-False}
