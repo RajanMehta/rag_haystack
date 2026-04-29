@@ -27,7 +27,7 @@ help:
 	@echo " - exp-list         	: lists registered experiments (see experiments/_registry.py)"
 	@echo " - exp-up EXP=NNN_<slug>	: stands up the stack with PIPELINE_CONFIG=exp_<EXP>"
 
-.PHONY: help init-persist install install-dev lock build build-dev build-haystack build-haystack-dev build-qdrant up dev logs down requirements lint isort black clean format stress test coverage e2e qdrant-cluster up-gpu dev-gpu standup-test exp-list exp-up
+.PHONY: help init-persist install install-dev lock build build-dev build-haystack build-haystack-dev build-qdrant up dev logs down requirements lint isort black clean format test coverage e2e up-gpu dev-gpu standup-test exp-list exp-up
 
 init-persist:
 	./scripts/init-persist.sh
@@ -113,11 +113,6 @@ e2e: init-persist
 		status=$$?; \
 		docker-compose down --remove-orphans; \
 		exit $$status
-
-qdrant-cluster: init-persist
-	sudo mkdir -p qdrant_storage/0 qdrant_storage/1 qdrant_storage/2
-	sudo chown -R 1000:1000 qdrant_storage/
-	docker-compose -f docker-compose.yml -f docker-compose.qdrant-cluster.yml up -d
 
 # GPU commands
 

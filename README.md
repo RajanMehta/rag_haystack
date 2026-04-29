@@ -1,6 +1,6 @@
 ## rag_haystack
 
-**rag_haystack** is a RAG stack that provides APIs to consume customized [haystack](https://docs.haystack.deepset.ai/docs)-pipelines. It uses [Qdrant](https://qdrant.tech/) as a document store and APIs to interact with it are also provided. This repo also holds self-contained experiments with various RAG techniques that are not part of the default pipelines.
+**rag_haystack** is a RAG stack built on [Haystack](https://docs.haystack.deepset.ai/docs) pipelines, with [Qdrant](https://qdrant.tech/) as the document store. The repo also has a growing set of self-contained experiments with various RAG techniques that sit outside the default pipelines.
 
 ## Launch everything
 
@@ -21,7 +21,7 @@ make build-dev
 ```
 make up logs
 ```
-5. The server should start running at port 31415. Expose it with ngrok. Open `<ngrok-url>/docs` to see Swagger API Documentation.
+5. The server starts at port 31415. Expose it with ngrok and open `<ngrok-url>/docs` for the Swagger docs.
 
 
 ## Models
@@ -37,7 +37,7 @@ For air-gapped or custom-model deployments, set `LOCAL_MODEL_DIR=/abs/path` in y
 
 ## Local setup
 
-To run different development tasks like testing, code-formatting and debugging it's best to have a non-docker setup too. Dependencies are managed with [uv](https://docs.astral.sh/uv/).
+For testing, formatting, and debugging you'll want a local setup alongside Docker. Dependencies are managed with [uv](https://docs.astral.sh/uv/).
 
 1. This repository requires `python 3.11` and `uv`. Install uv with:
 ```
@@ -57,14 +57,14 @@ make install-dev
 ```
 source .venv/bin/activate
 ```
-4. You should now be able to run the standalone server. Either of the following works:
+4. Start the standalone server. Either of the following works:
 ```
 uv run uvicorn --app-dir=haystack_api/ application:app --reload --host 0.0.0.0 --port 31415
 ```
 ```
 uvicorn --app-dir=haystack_api/ application:app --reload --host 0.0.0.0 --port 31415  # if .venv is activated
 ```
-5. You should also be able to run tests and check formatting. Run `make help` to find more.
+5. Run tests and check formatting. Run `make help` to see everything available.
 
 ### Updating dependencies
 
@@ -80,12 +80,12 @@ Commit both `pyproject.toml` and `uv.lock`.
 Haystack nodes can run on a GPU if your machine has one.
 The following commands will only work if [Nvidia Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) is installed on your machine.
 
-1. Stands up the stack
+1. Stand up the stack:
 ```
 make up-gpu
 ```
 
-2. Stands up the stack in dev mode
+2. Stand up the stack in dev mode:
 ```
 make dev-gpu
 ```

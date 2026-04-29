@@ -1,6 +1,6 @@
 # Experiments
 
-Exploration code layered on top of the base `haystack_api/` service. One folder per experiment. Select with `PIPELINE_CONFIG=exp_NNN_<slug> make up`.
+Each experiment is a self-contained folder built on top of the base `haystack_api/` service. Bring one up with `PIPELINE_CONFIG=exp_NNN_<slug> make up`.
 
 ## Index
 

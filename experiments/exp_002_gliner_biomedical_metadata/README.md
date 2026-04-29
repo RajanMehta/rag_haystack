@@ -8,7 +8,7 @@ Pure-vector RAG retrieval is blind to entity structure. A query like *"metformin
 
 Haystack's [`LLMMetadataExtractor`](https://docs.haystack.deepset.ai/docs/llmmetadataextractor) solves this by asking an LLM to tag entities at indexing time, then [extracting them again from the query](https://haystack.deepset.ai/blog/extracting-metadata-filter) and translating to a metadata filter. But the LLM is the bottleneck: a 70B model per chunk during ingest is expensive, slow, and adds an external API dependency.
 
-This experiment replaces the LLM with [**GLiNER2**](https://github.com/fastino-ai/GLiNER2) (Fastino, 205M params) — one CPU-friendly model that handles NER, classification, and structured extraction in a unified interface. We use it for NER only here: extract `disease / drug / gene / symptom / anatomy / treatment` from each document at ingest, extract the same labels from the query at search time, and translate query entities into a Qdrant filter that the existing `CustomQdrantRetriever` consumes unchanged.
+This experiment replaces the LLM with [**GLiNER2**](https://github.com/fastino-ai/GLiNER2) (Fastino, 205M params), a CPU-friendly NER model. We use it for entity extraction only: pull `disease / drug / gene / symptom / anatomy / treatment` from each document at ingest, extract the same labels from the query at search time, and translate query entities into a Qdrant filter that the existing `CustomQdrantRetriever` consumes unchanged.
 
 ## What's new vs. base (`en_gen`)
 
@@ -20,7 +20,7 @@ This experiment replaces the LLM with [**GLiNER2**](https://github.com/fastino-a
   - `indexing_pipeline`: `documentcleaner → metadata_extractor → documentsplitter → documentwriter` (extractor inserted between cleaner and splitter).
   - `document_indexing_pipeline`: same insertion.
   - `search_pipeline`: `query_filter_builder` runs in parallel with `text_embedder`. Its `filters` output wires into `embedding_retriever.filters`. The user-supplied `filters` from the request body now flow through `query_filter_builder.user_filters` and get AND-merged with the GLiNER-derived filter.
-- **Controller diff** in [`haystack_api/controller/query.py`](../../haystack_api/controller/query.py): tiny switch — if the active pipeline contains `query_filter_builder`, redirect the request's `filters` param to it instead of the retriever. Base pipelines are unchanged.
+- **Controller diff** in [`haystack_api/controller/query.py`](../../haystack_api/controller/query.py): one small change — if the active pipeline contains `query_filter_builder`, redirect the request's `filters` param to it instead of the retriever. Base pipelines are unchanged.
 - **New dependency** in [`pyproject.toml`](../../pyproject.toml): `gliner2>=1.3.0,<2.0.0`. After updating the lockfile (`make lock`), the model `fastino/gliner2-base-v1` (~205M) downloads from HF on first use and caches under `HF_HOME`.
 
 ## How to run
@@ -104,7 +104,7 @@ curl -s -X POST localhost:31415/query \
 
 - **First request is slow.** The GLiNER model is lazy-loaded on first `run()`, downloading from HF (~205M) if not yet cached. Bake into the image (à la `sentence-transformers/all-mpnet-base-v2` in [`Dockerfile`](../../Dockerfile)) if cold-start matters.
 - **Truncation.** `max_input_chars` (default 4000) caps GLiNER's input. Very long documents are truncated *before* extraction, but chunking still happens on the full content. Increase if your corpus has long-form articles where entities live near the end.
-- **Filter strictness.** AND-across-labels can over-filter when GLiNER picks up an entity the corpus doesn't tag for. Mitigation if you hit this: relax to OR-across-labels in `_extract_filter`, or move to a "soft filter" pattern (rerank with filter signal instead of hard-filter). Not implemented here.
+- **Filter strictness.** AND-across-labels can over-filter when GLiNER detects an entity the corpus never indexed. If you hit this: relax to OR-across-labels in `_extract_filter`, or use a "soft filter" pattern (rerank with filter signal instead of hard-filtering). Not implemented here.
 - **Label set is global.** Same labels are used for indexing and query extraction by design. Different label sets would mean the query extractor picks fields the corpus never indexed.
 - **Base pipelines (`PIPELINE_CONFIG=en_gen`) are unaffected.** The controller switch only fires when `query_filter_builder` exists in the active pipeline. Base requests with `filters` continue to flow straight to the retriever.
 
